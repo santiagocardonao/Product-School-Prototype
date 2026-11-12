@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <main>{children}</main>
         <Footer />
         <DevPanel />
+        <Analytics />
       </body>
     </html>
   );

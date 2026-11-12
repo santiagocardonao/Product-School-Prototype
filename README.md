@@ -10,6 +10,18 @@ Three flows that earn the visitor's email back after pricing went public. Built 
 
 **Stand-ins for your stack:** `src/data/*.ts` = Contentful · `track()` = Segment · `src/lib/flags.ts` = LaunchDarkly · `/api/lead` = HubSpot (logs only, nothing stored) · email previews = transactional email. The "Data panel" (bottom right) shows every event and lead payload.
 
+**Feature flags** (`src/lib/flags.ts`, all `true` in production). Each flow ships behind one so it can run as an A/B test:
+
+| Flag | Controls | When `false` |
+|---|---|---|
+| `advisor` | `/advisor` | Page returns 404; hidden from the nav and the home cards |
+| `teamCalculator` | `/teams` | Page returns 404; hidden from the nav and the home cards |
+| `emailFirstCheckout` | `/checkout/*` | Control arm: no email step, straight to payment. Its home card is hidden; the pricing buttons and the nav still lead to checkout. `Checkout Started` carries `variant: "control"` instead of `"email_first"` |
+
+Flags are build-time constants: change the value and redeploy. A real setup would read them per visitor from LaunchDarkly.
+
+**Visits:** Vercel Web Analytics (`<Analytics />` in `src/app/layout.tsx`) counts page views in the Vercel dashboard. The funnel events from `track()` stay in the Data panel only.
+
 **Limits (per IP, per serverless instance, in memory):**
 
 | Endpoint | Rate limit | Input limits | When blocked |
