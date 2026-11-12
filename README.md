@@ -10,4 +10,4 @@ Three flows that earn the visitor's email back after pricing went public. Built 
 
 **Stand-ins for your stack:** `src/data/*.ts` = Contentful · `track()` = Segment · `src/lib/flags.ts` = LaunchDarkly · `/api/lead` = HubSpot (logs only, nothing stored) · email previews = transactional email. The "Data panel" (bottom right) shows every event and lead payload.
 
-Run: `npm i && npm run dev` with `ANTHROPIC_API_KEY` in `.env.local`. Design tokens live in `src/styles/tokens.css`.
+Run: `npm i && npm run dev` with `ANTHROPIC_API_KEY` in `.env.local`. Design system: tokens and components in `src/styles/ps/` (Inter + JetBrains Mono, primary-200 #2758E2, mesh hero, ps-* components).

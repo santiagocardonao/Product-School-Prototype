@@ -33,19 +33,16 @@ export default function EmailCapture({ source, data, cta, event, withCompany, on
     onSent(email);
   }
 
-  const field = "w-full rounded-field border border-line bg-surface px-3 py-2.5 outline-none focus:border-primary";
   return (
     <form onSubmit={submit} className="space-y-3">
       <div className={withCompany ? "grid gap-3 sm:grid-cols-3" : ""}>
-        <input type="email" required placeholder={withCompany ? "Work email" : "Your email"} value={email} onChange={(e) => setEmail(e.target.value)} className={field} />
-        {withCompany && <input required placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)} className={field} />}
-        {withCompany && <input placeholder="Your role (optional)" value={role} onChange={(e) => setRole(e.target.value)} className={field} />}
+        <input type="email" required aria-label="Email" placeholder={withCompany ? "Work email" : "you@company.com"} value={email} onChange={(e) => setEmail(e.target.value)} className="ps-input" />
+        {withCompany && <input required aria-label="Company" placeholder="Company" value={company} onChange={(e) => setCompany(e.target.value)} className="ps-input" />}
+        {withCompany && <input aria-label="Role" placeholder="Your role (optional)" value={role} onChange={(e) => setRole(e.target.value)} className="ps-input" />}
       </div>
-      <button disabled={busy} className="w-full rounded-field bg-primary px-5 py-3 font-semibold text-on-primary disabled:opacity-60 sm:w-auto">
-        {busy ? "Sending…" : cta}
-      </button>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <p className="text-xs text-muted">Prototype: use a test email. Nothing is stored or sent.</p>
+      <button disabled={busy} className="ps-btn ps-btn-primary ps-btn-lg w-full sm:w-auto">{busy ? "Sending…" : cta}</button>
+      {error && <p role="alert" className="text-xs text-[var(--error-300)]">{error}</p>}
+      <p className="text-xs text-secondary">Prototype: use a test email. Nothing is stored or sent.</p>
     </form>
   );
 }

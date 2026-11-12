@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import DevPanel from "@/components/DevPanel";
 
 export const metadata: Metadata = {
@@ -12,9 +13,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen antialiased">
+      <body>
         <Header />
-        <main className="mx-auto max-w-6xl px-5 pb-32">{children}</main>
+        <main>{children}</main>
+        <Footer />
         <DevPanel />
       </body>
     </html>

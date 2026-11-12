@@ -11,7 +11,7 @@ async function Checkout({ searchParams }: { searchParams: Promise<{ plan?: strin
 
 export default function CheckoutPage({ searchParams }: { searchParams: Promise<{ plan?: string }> }) {
   return (
-    <Suspense fallback={<div className="pt-8 text-muted">Loading checkout…</div>}>
+    <Suspense fallback={<div className="ps-section ps-container text-secondary">Loading checkout…</div>}>
       <Checkout searchParams={searchParams} />
     </Suspense>
   );

@@ -1,0 +1,47 @@
+:root{
+  /* ===== Families — Inter (sans/display) + JetBrains Mono (mono voice) ===== */
+  --font-sans:"Inter",system-ui,-apple-system,sans-serif;
+  --font-display:"Inter",system-ui,-apple-system,sans-serif;
+  --font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  /* ===== Weights — light for long-form body, regular for UI, 500 for titles ===== */
+  --weight-light:320;    /* large ledes / long display-adjacent sentences */
+  --weight-body:350;     /* standard running paragraphs — lighter than UI */
+  --weight-regular:400;  /* UI text, short labels, small meta/captions */
+  --weight-medium:500;   /* buttons, nav, titles, subheadings */
+  --weight-semibold:600;
+
+  /* ===== Type scale (desktop px, with responsive clamps) ===== */
+  --text-display-xl:clamp(44px,6vw,80px);  /* Hero H1 — 80/78, -0.3px, 400 */
+  --text-display-l:3.5rem;                 /* 56 — CTA / "A decade of…" */
+  --text-h2:clamp(32px,4vw,48px);          /* Section titles — 48/54, -0.3px, 400 */
+  --text-h3:1.5rem;                        /* 24/30 — card & feature titles, 400-500 */
+  --text-title:1.25rem;                    /* 20 — course titles, list headings, 500 */
+  --text-body:1rem;                        /* 16/24 — paragraphs, 400 */
+  --text-ui:0.875rem;                      /* 14 — nav links, small buttons, 500 */
+  --text-sm:0.875rem;                      /* 14 */
+  --text-xs:0.75rem;                       /* 12 */
+
+  /* Mono roles */
+  --text-mono-eyebrow:0.875rem;            /* 14, +0.2px, UPPERCASE, 500 */
+  --text-mono-meta:0.875rem;               /* 14, -0.28px, 400 */
+  --text-mono-badge:0.625rem;              /* 10, +0.5px, UPPERCASE, 600 */
+  --text-mono-stat:3.5rem;                 /* 56/1, -0.06em, 400 */
+
+  /* ===== Line-heights ===== */
+  --leading-display:1.0;
+  --leading-tight:1.12;
+  --leading-snug:1.25;
+  --leading-normal:1.5;
+  --leading-relaxed:1.6;
+
+  /* ===== Tracking ===== */
+  --tracking-display:-0.3px;
+  --tracking-tight:-0.2px;
+  --tracking-ui:-0.24px;
+  --tracking-meta:-0.28px;
+  --tracking-stat:-0.06em;
+  --tracking-eyebrow:0.2px;
+  --tracking-badge:0.5px;
+  --tracking-normal:0;
+}

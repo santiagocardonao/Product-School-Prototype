@@ -1,25 +1,30 @@
 @import "tailwindcss";
-@import "../styles/tokens.css";
+@import "../styles/ps/fonts.css";
+@import "../styles/ps/colors.css";
+@import "../styles/ps/typography.css";
+@import "../styles/ps/spacing.css";
+@import "../styles/ps/base.css";
+@import "../styles/ps/components.css" layer(components);
 
+/* Fonts, radii and shadows come straight from the DS :root (unlayered, so they win over Tailwind defaults).
+   Tailwind utilities mapped to the design system tokens. */
 @theme inline {
-  --color-canvas: var(--ps-color-canvas);
-  --color-surface: var(--ps-color-surface);
-  --color-ink: var(--ps-color-ink);
-  --color-muted: var(--ps-color-muted);
-  --color-line: var(--ps-color-line);
-  --color-primary: var(--ps-color-primary);
-  --color-on-primary: var(--ps-color-on-primary);
-  --color-accent-soft: var(--ps-color-accent-soft);
-  --color-success: var(--ps-color-success);
-  --color-warning-soft: var(--ps-color-warning-soft);
-  --font-sans: var(--ps-font-sans);
-  --font-display: var(--ps-font-display);
-  --radius-card: var(--ps-radius);
-  --radius-field: var(--ps-radius-sm);
-}
-
-body {
-  background: var(--ps-color-canvas);
-  color: var(--ps-color-ink);
-  font-family: var(--ps-font-sans);
+  --color-canvas: var(--light);
+  --color-surface: var(--white);
+  --color-sunken: var(--neutral-50);
+  --color-ink: var(--neutral-600);
+  --color-strong: var(--neutral-700);
+  --color-muted: var(--neutral-400);
+  --color-secondary: var(--neutral-300);
+  --color-line: var(--neutral-100);
+  --color-primary: var(--primary-200);
+  --color-primary-hover: var(--primary-300);
+  --color-primary-soft: var(--primary-50);
+  --color-primary-tint: var(--primary-60);
+  --color-on-primary: var(--white);
+  --color-accent-soft: var(--primary-50);
+  --color-success: var(--success-400);
+  --color-warning-soft: var(--caution-50);
+  --color-warning-ink: var(--caution-700);
+  --color-orange: var(--orange-300);
 }

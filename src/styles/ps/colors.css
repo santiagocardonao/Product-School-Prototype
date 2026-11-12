@@ -1,0 +1,91 @@
+:root{
+  /* ===== Primary — blue (site scale + names) ===== */
+  --primary-50:#F5F8FF;   /* faint blue section wash */
+  --primary-60:#E0E8FF;   /* hover fill on light, soft tint */
+  --primary-70:#CAD9FE;   /* light borders/fills, text on dark blue */
+  --primary-90:#A8C0FD;
+  --primary-100:#7B9FFB;  /* dividers/lines on blue panels */
+  --primary-150:#1570EF;  /* brand-blue — eyebrow tag fill */
+  --primary-200:#2758E2;  /* brand-blue-deep — THE brand primary */
+  --primary-300:#1241B0;  /* hover/press, inline links */
+  --primary-400:#0D297D;
+  --primary-500:#0A1633;  /* navy — dark tables, legal long-form */
+  --brand-blue:var(--primary-150);
+  --brand-blue-deep:var(--primary-200);
+
+  /* ===== Neutrals — true grays ===== */
+  --light:#FCFCFC;        /* page background */
+  --white:#FFFFFF;        /* cards, most sections */
+  --neutral-25:#FAFAFA;
+  --neutral-50:#F5F5F5;   /* alt section bg, input fill */
+  --neutral-100:#E5E5E5;  /* hairline borders/dividers */
+  --neutral-150:#D4D4D4;  /* stronger borders */
+  --neutral-200:#A3A3A3;  /* muted text ON DARK ONLY */
+  --neutral-300:#737373;  /* secondary text on light */
+  --neutral-400:#525252;  /* meta text (dates, roles) */
+  --neutral-500:#404040;  /* strong secondary */
+  --neutral-600:#262626;  /* ink — body text */
+  --neutral-700:#171717;  /* headings + footer bg */
+  --ink:var(--neutral-600);
+
+  /* ===== Orange — mesh partner, not a UI accent ===== */
+  --orange-50:#FFF0E8;
+  --orange-300:#FF832B;
+  --orange-450:#A24B00;
+  --mesh-orange-1:#FF7043;
+  --mesh-orange-2:#FFAC70;
+  --mesh-orange-3:#F9B08E;
+
+  /* ===== Semantic hues ===== */
+  --success-50:#DAFBE8;
+  --success-100:#BAF7D3;
+  --success-300:#00D358;
+  --success-400:#03A346;
+  --caution-50:#FBF3DA;
+  --caution-200:#EDC85A;   /* MOST POPULAR badge fill */
+  --caution-700:#513D01;   /* MOST POPULAR badge text */
+  --error-50:#FBDADA;
+  --error-300:#E42727;     /* error + LIVE badge */
+  --lilac-100:#F8F4FF;
+
+  /* ===== Semantic roles — background ===== */
+  --color-bg-page:var(--light);
+  --color-bg-surface:var(--white);
+  --color-bg-sunken:var(--neutral-50);
+  --color-bg-inverse:var(--neutral-700);   /* footer / dark blocks */
+  --color-bg-navy:var(--primary-500);      /* dark tables, legal */
+  --color-bg-accent:var(--primary-200);    /* blue CTA panel */
+
+  /* ===== Semantic roles — foreground ===== */
+  --color-fg-strong:var(--neutral-700);    /* headings */
+  --color-fg-body:var(--neutral-600);      /* body text */
+  --color-fg-secondary:var(--neutral-300); /* descriptions on white/light ONLY (4.35:1 on neutral-50 — use fg-meta there) */
+  --color-fg-meta:var(--neutral-400);      /* dates, roles */
+  --color-fg-muted-on-dark:var(--neutral-200);
+  --color-fg-on-dark:var(--white);
+  --color-fg-on-accent:var(--white);
+  --color-fg-link:var(--primary-200);
+  --color-fg-link-hover:var(--primary-300);
+  --color-fg-error:var(--error-300);
+  --color-fg-success:var(--success-400);
+
+  /* ===== Semantic roles — border ===== */
+  --color-border-hairline:var(--neutral-100);
+  --color-border-strong:var(--neutral-150);
+  --color-border-focus:var(--primary-200);       /* focus ring on light surfaces */
+  --color-border-focus-on-color:var(--white);    /* focus ring on blue / mesh / navy / footer */
+  --color-border-error:var(--error-300);
+
+  /* ===== Gradients — blue <-> orange ===== */
+  --gradient-brand:linear-gradient(90deg,var(--orange-300),var(--primary-200));     /* @kind other — orange (left) → blue (right) */
+  --gradient-brand-v:linear-gradient(180deg,var(--orange-300),var(--primary-200));  /* @kind other — orange (top) → blue (bottom) */
+
+  /* ===== Signature hero mesh — royal blue field + warm orange wave ===== */
+  --mesh-hero:
+    radial-gradient(130% 120% at 88% 100%, rgba(255,131,43,0.95) 0%, rgba(255,112,67,0.72) 18%, rgba(255,172,112,0.32) 34%, rgba(255,172,112,0) 52%),
+    radial-gradient(120% 120% at 12% 6%, #6F7FF0 0%, rgba(111,127,240,0) 55%),
+    linear-gradient(135deg, #2758E2 0%, #1570EF 52%, #4A63D9 100%); /* @kind other */
+
+  /* ===== Film grain — part of the brand ===== */
+  --texture-grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); /* @kind other */
+}

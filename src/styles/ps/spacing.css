@@ -1,0 +1,73 @@
+:root{
+  /* ===== 4px base spacing scale ===== */
+  --space-0:0;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:20px;
+  --space-6:24px;
+  --space-8:32px;
+  --space-10:40px;
+  --space-12:48px;
+  --space-16:64px;
+  --space-20:80px;
+  --space-24:96px;
+  --space-32:128px;
+
+  /* ===== Radii — tight, editorial ===== */
+  --radius-none:0;      /* eyebrow tags, stat cards, catalog rows, full-bleed panels */
+  --radius-xs:4px;      /* badges (MOST POPULAR / NEW / LIVE) */
+  --radius-md:6px;      /* ALL buttons */
+  --radius-lg:8px;      /* cards, inputs, testimonials */
+  --radius-xl:14px;     /* large containers, raised panels, UI mockups */
+  --radius-2xl:16px;    /* large media / product collage */
+  --radius-3xl:24px;    /* rare, largest containers */
+  --radius-device:22px; /* phone/device mockups only */
+  --radius-full:9999px; /* avatars only */
+
+  /* ===== Elevation — ring + soft layers (site, gray-950 rgb(3,7,18)) ===== */
+  /* Rings: an outline that takes no layout space. Use INSTEAD of border on cards. */
+  --ring-hairline:0 0 0 1px rgba(3,7,18,0.08);
+  --ring-default:0 0 0 1px rgba(3,7,18,0.10);
+  /* Level 1 — resting card (testimonials, generic Card) */
+  --shadow-card:0 0 0 1px rgba(3,7,18,0.10),0 2px 4px 0 rgba(3,7,18,0.04);
+  /* Level 1b — blue-tinted card on light (course / "how it works" cards) */
+  --shadow-card-tint:0 0 0 1px rgba(39,88,226,0.04),0 0 8px 0 rgba(39,88,226,0.08);
+  /* Level 2 — interactive card hover */
+  --shadow-card-hover:0 0 0 1px rgba(3,7,18,0.12),0 1px 2px -1px rgba(3,7,18,0.06),0 4px 12px 0 rgba(3,7,18,0.06);
+  /* Level 3 — raised panel sitting ON another surface (AI Builder column) */
+  --shadow-raised:0 0 0 1px rgba(3,7,18,0.08),0 16px 32px 0 rgba(3,7,18,0.08),0 2px 24px 0 rgba(3,7,18,0.08);
+  /* Level 4 — UI mockups floating over the mesh (hero collage) */
+  --shadow-float:0 0 0 0.9px rgba(255,255,255,0.12),0 7px 28px 0 rgba(3,7,18,0.04),0 7px 36px -5px rgba(61,105,229,0.12),0 16px 78px -4px rgba(28,40,64,0.14);
+  /* Level 5 — small chips/tooltips over the mesh, and modals */
+  --shadow-pop:0 0 0 0.5px rgba(0,0,0,0.12),0 8px 32px 0 rgba(3,7,18,0.12),0 8px 40px -6px rgba(3,7,18,0.20),0 18px 88px -4px rgba(3,7,18,0.22);
+  /* Media frames (photos/video tiles over color) */
+  --shadow-media:0 0 0 0.8px rgba(255,255,255,0.24),0 8px 32px 0 rgba(0,0,0,0.16);
+  /* Internal dividers drawn as inset shadows — no doubled hairlines where cells meet */
+  --divider-top:inset 0 1px 0 0 var(--neutral-100);
+  --divider-left:inset 1px 0 0 0 var(--neutral-100);
+  /* Text */
+  --text-shadow-hero:0 2px 2px rgba(0,0,0,0.25); /* @kind other */
+  --shadow-text:drop-shadow(0 1px 2px rgba(0,0,0,0.25)); /* @kind other */
+
+  /* ===== Focus ===== */
+  --focus-width:2px;
+  --focus-offset:2px;
+
+  /* ===== Layout ===== */
+  --container-max:1280px;   /* 80rem */
+  --container-prose:720px;
+  --section-pad-y:clamp(64px,7.5vw,96px);       /* site py-16 -> lg:py-24 */
+  --section-pad-y-lg:clamp(80px,9vw,128px);     /* statement sections */
+  --section-pad-y-sm:48px;                      /* logo strip */
+  --section-pad-x:clamp(24px,4vw,48px);         /* site px-6 -> md:px-12 */
+  --hero-pad-top:68px;                          /* below the fixed nav */
+
+  /* ===== Motion — short and quiet (Tailwind defaults) ===== */
+  --ease-out:cubic-bezier(0,0,0.2,1);     /* @kind other */
+  --ease-standard:cubic-bezier(0.4,0,0.2,1); /* @kind other */
+  --dur-fast:150ms; /* @kind other */
+  --dur-base:200ms; /* @kind other */
+  --dur-slow:300ms; /* @kind other */
+}
