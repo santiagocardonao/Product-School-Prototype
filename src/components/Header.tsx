@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { isOn, type FlagKey } from "@/lib/flags";
 
-const LINKS = [
-  { href: "/advisor", label: "AI course advisor" },
-  { href: "/teams", label: "For teams" },
+const LINKS: { href: string; label: string; match?: string; flag?: FlagKey }[] = [
+  { href: "/advisor", label: "AI course advisor", flag: "advisor" },
+  { href: "/teams", label: "For teams", flag: "teamCalculator" },
   { href: "/checkout/pro", label: "Checkout", match: "/checkout" },
 ];
 
@@ -22,7 +23,7 @@ export default function Header() {
             <img src="/ps-logo.svg" alt="Product School" className="h-[26px] w-auto" />
           </Link>
           <div className="hidden items-center gap-6 md:flex">
-            {LINKS.map((l) => (
+            {LINKS.filter((l) => !l.flag || isOn(l.flag)).map((l) => (
               <Link key={l.href} href={l.href} className="ps-nav-link py-1.5" aria-current={path.startsWith(l.match ?? l.href) ? "page" : undefined}>{l.label}</Link>
             ))}
           </div>

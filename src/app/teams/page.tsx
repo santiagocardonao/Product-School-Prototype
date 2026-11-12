@@ -6,11 +6,16 @@ import HypothesisNote from "@/components/HypothesisNote";
 import PageIntro from "@/components/PageIntro";
 import { CATALOG, courseBySlug } from "@/data/catalog";
 import { PLANS, TEAM_TIERS, usd, type PlanId } from "@/data/pricing";
-import { teamQuote } from "@/lib/teamQuote";
+import { notFound } from "next/navigation";
+import { isOn } from "@/lib/flags";
+import { clampSeats, teamQuote } from "@/lib/teamQuote";
 import { track } from "@/lib/track";
 
 export default function TeamsPage() {
+  if (!isOn("teamCalculator")) notFound();
   const [seats, setSeats] = useState(12);
+  // What the visitor is typing. The quote always uses the clamped count; the box snaps to it on blur.
+  const [seatsDraft, setSeatsDraft] = useState("12");
   const [planId, setPlanId] = useState<PlanId>("pro");
   const [focus, setFocus] = useState("");
   const [sentTo, setSentTo] = useState("");
@@ -22,12 +27,13 @@ export default function TeamsPage() {
     const s = Number(new URLSearchParams(window.location.search).get("seats"));
     // ?seats= comes from the advisor link; window only exists on the client, so read it once on mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (s > 0) setSeats(Math.min(500, s));
+    if (s > 0) { const n = clampSeats(s); setSeats(n); setSeatsDraft(String(n)); }
     track("Team Calculator Viewed", { prefilledSeats: s || null });
   }, []);
   useEffect(() => {
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => track("Team Quote Calculated", { seats: q.seats, plan: planId, total: q.total }), 800);
+    return () => { if (timer.current) clearTimeout(timer.current); };
   }, [q.seats, planId, q.total]);
 
   return (
@@ -41,8 +47,10 @@ export default function TeamsPage() {
             <div>
               <label htmlFor="seats" className="ps-label">How many people?</label>
               <div className="flex items-center gap-4">
-                <input id="seats-range" aria-label="Team size slider" type="range" min={1} max={100} value={Math.min(seats, 100)} onChange={(e) => setSeats(+e.target.value)} className="flex-1 accent-[var(--primary-200)]" />
-                <input id="seats" type="number" min={1} max={500} value={seats} onChange={(e) => setSeats(+e.target.value)} className="ps-input w-24 text-center font-mono" />
+                <input id="seats-range" aria-label="Team size slider" type="range" min={1} max={100} value={Math.min(q.seats, 100)} onChange={(e) => { setSeats(+e.target.value); setSeatsDraft(e.target.value); }} className="flex-1 accent-[var(--primary-200)]" />
+                <input id="seats" type="number" min={1} max={500} value={seatsDraft}
+                  onChange={(e) => { setSeatsDraft(e.target.value); setSeats(+e.target.value); }}
+                  onBlur={() => { setSeats(q.seats); setSeatsDraft(String(q.seats)); }} className="ps-input w-24 text-center font-mono" />
               </div>
             </div>
             <div>

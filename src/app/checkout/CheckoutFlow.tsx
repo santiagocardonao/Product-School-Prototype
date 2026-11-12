@@ -6,19 +6,22 @@ import EmailPreview from "@/components/EmailPreview";
 import HypothesisNote from "@/components/HypothesisNote";
 import PageIntro from "@/components/PageIntro";
 import { PLANS, usd, type PlanId } from "@/data/pricing";
+import { isOn } from "@/lib/flags";
 import { track } from "@/lib/track";
 
 export default function CheckoutFlow({ planId }: { planId: PlanId }) {
   const plan = PLANS[planId];
+  // Flag off = control arm: the classic checkout, straight to payment with no email step.
+  const emailFirst = isOn("emailFirstCheckout");
   const [email, setEmail] = useState("");
   const [abandoned, setAbandoned] = useState(false);
 
   useEffect(() => {
-    track("Checkout Started", { plan: planId, price: plan.price });
+    track("Checkout Started", { plan: planId, price: plan.price, variant: emailFirst ? "email_first" : "control" });
     // Restore the email after a refresh: sessionStorage only exists on the client, so this runs once on mount.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     try { const saved = sessionStorage.getItem("checkout_email"); if (saved) setEmail(saved); } catch {}
-  }, [planId, plan.price]);
+  }, [planId, plan.price, emailFirst]);
 
   function onSent(e: string) {
     setEmail(e);
@@ -28,11 +31,11 @@ export default function CheckoutFlow({ planId }: { planId: PlanId }) {
   return (
     <div className="ps-section bg-canvas">
       <div className="ps-container">
-        <PageIntro eyebrow="Email-first checkout" title="Checkout." accent="Email first, then payment." />
+        <PageIntro eyebrow={emailFirst ? "Email-first checkout" : "Checkout"} title="Checkout." accent={emailFirst ? "Email first, then payment." : "Pay in one step."} />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1.3fr_1fr]">
           <div className="space-y-5">
-            <div className={`p-6 md:p-7 ${email ? "ps-card" : "ps-panel"}`}>
+            {emailFirst && <div className={`p-6 md:p-7 ${email ? "ps-card" : "ps-panel"}`}>
               <p className="ps-mono-meta uppercase">Step 1 of 2</p>
               <p className="ps-title mt-1">Your email</p>
               {!email ? (
@@ -44,10 +47,10 @@ export default function CheckoutFlow({ planId }: { planId: PlanId }) {
               ) : (
                 <p className="mt-2 text-[15px]">{email} <span className="text-success">· saved. If you leave now, we can still help you finish.</span></p>
               )}
-            </div>
+            </div>}
 
-            <div className={`ps-card p-6 md:p-7 ${email ? "" : "opacity-50"}`}>
-              <p className="ps-mono-meta uppercase">Step 2 of 2</p>
+            <div className={`ps-card p-6 md:p-7 ${emailFirst && !email ? "opacity-50" : ""}`}>
+              {emailFirst && <p className="ps-mono-meta uppercase">Step 2 of 2</p>}
               <p className="ps-title mt-1">Payment</p>
               <div className="mt-4 space-y-3">
                 <input disabled aria-label="Card number" placeholder="Card number" className="ps-input" />

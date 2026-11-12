@@ -1,7 +1,10 @@
 import { PLANS, TEAM_TIERS, type PlanId } from "@/data/pricing";
 
+// The calculator prices 1–500 whole seats; anything else (0, negative, NaN, empty) becomes 1.
+export const clampSeats = (seats: number) => Math.max(1, Math.min(500, Math.floor(seats || 1)));
+
 export function teamQuote(seats: number, planId: PlanId) {
-  const s = Math.max(1, Math.min(500, Math.floor(seats || 1)));
+  const s = clampSeats(seats);
   const listPerSeat = PLANS[planId].price;
   const tier = TEAM_TIERS.find((t) => s >= t.min && s <= t.max)!;
   const perSeat = Math.round(listPerSeat * (1 - tier.discount));

@@ -1,14 +1,15 @@
 import TrackLink from "@/components/TrackLink";
 import Shield from "@/components/Shield";
 import { PLANS, usd } from "@/data/pricing";
+import { isOn } from "@/lib/flags";
 
 const CTA: Record<string, string> = { single_certification: "Join a cohort", pro: "Get Pro", unlimited: "Go Unlimited" };
 
 const FLOWS = [
-  { href: "/advisor", n: "01", tag: "Both audiences · real AI", title: "AI course advisor", body: "Visitors describe their role and goal. Claude builds a personal path from the real catalog, then emails it. The lead arrives qualified." },
-  { href: "/teams", n: "02", tag: "Enterprise", title: "Team pricing calculator", body: "“How many people?” returns a team price instantly. The full proposal goes by email, and 5+ seats reach sales as an MQL." },
-  { href: "/checkout/pro", n: "03", tag: "Easiest to ship", title: "Email-first checkout", body: "Step one asks only for the email, so abandoned checkouts become leads you can recover." },
-];
+  { flag: "advisor", href: "/advisor", n: "01", tag: "Both audiences · real AI", title: "AI course advisor", body: "Visitors describe their role and goal. Claude builds a personal path from the real catalog, then emails it. The lead arrives qualified." },
+  { flag: "teamCalculator", href: "/teams", n: "02", tag: "Enterprise", title: "Team pricing calculator", body: "“How many people?” returns a team price instantly. The full proposal goes by email, and 5+ seats reach sales as an MQL." },
+  { flag: "emailFirstCheckout", href: "/checkout/pro", n: "03", tag: "Easiest to ship", title: "Email-first checkout", body: "Step one asks only for the email, so abandoned checkouts become leads you can recover." },
+] as const;
 
 function Collage() {
   return (
@@ -79,7 +80,7 @@ export default function Home() {
           <span className="ps-eyebrow">Three bets</span>
           <h2 className="ps-h2 mt-5 max-w-3xl">Three bets. <span className="ps-accent">Each one earns the email.</span></h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {FLOWS.map((c) => (
+            {FLOWS.filter((c) => isOn(c.flag)).map((c) => (
               <TrackLink key={c.href} href={c.href} event="Flow Card Clicked" props={{ flow: c.title }} className="ps-card-tint ps-card-link group flex flex-col p-7">
                 <span className="font-mono text-[40px] leading-none tracking-[-0.06em] text-primary">{c.n}</span>
                 <span className="ps-mono-meta mt-6 uppercase">{c.tag}</span>

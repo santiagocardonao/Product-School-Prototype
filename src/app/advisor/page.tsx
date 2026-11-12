@@ -1,4 +1,6 @@
 "use client";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import EmailCapture from "@/components/EmailCapture";
 import EmailPreview from "@/components/EmailPreview";
@@ -7,6 +9,7 @@ import PageIntro from "@/components/PageIntro";
 import { courseBySlug } from "@/data/catalog";
 import { PLANS, usd } from "@/data/pricing";
 import { SAMPLE_RESULT, type AdvisorResult } from "@/lib/advisorSchema";
+import { isOn } from "@/lib/flags";
 import { track } from "@/lib/track";
 
 const EXAMPLES = [
@@ -16,6 +19,7 @@ const EXAMPLES = [
 ];
 
 export default function AdvisorPage() {
+  if (!isOn("advisor")) notFound();
   const [text, setText] = useState("");
   const [team, setTeam] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -110,7 +114,7 @@ export default function AdvisorPage() {
                   {plan ? (
                     <p className="mt-2 flex items-baseline gap-2"><span className="ps-title">{plan.name}</span><span className="font-mono text-xl tracking-[-0.04em] text-strong">{usd(plan.price)}</span><span className="ps-mono-meta">{plan.period}</span></p>
                   ) : (
-                    <p className="mt-2"><span className="ps-title">Team plan</span> · <a href={`/teams${result.profile.teamSizeHint ? `?seats=${result.profile.teamSizeHint}` : ""}`} className="ps-link-arrow">See your team price</a></p>
+                    <p className="mt-2"><span className="ps-title">Team plan</span> · <Link href={`/teams${result.profile.teamSizeHint ? `?seats=${result.profile.teamSizeHint}` : ""}`} onClick={() => track("Team Link Clicked", { from: "advisor" })} className="ps-link-arrow">See your team price</Link></p>
                   )}
                   <p className="ps-body mt-1.5 text-[15px]">{result.planReason}</p>
                 </div>
