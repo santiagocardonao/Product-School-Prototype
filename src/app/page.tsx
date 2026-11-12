@@ -2,10 +2,12 @@ import TrackLink from "@/components/TrackLink";
 import Shield from "@/components/Shield";
 import { PLANS, usd } from "@/data/pricing";
 
+const CTA: Record<string, string> = { single_certification: "Join a cohort", pro: "Get Pro", unlimited: "Go Unlimited" };
+
 const FLOWS = [
   { href: "/advisor", n: "01", tag: "Both audiences · real AI", title: "AI course advisor", body: "Visitors describe their role and goal. Claude builds a personal path from the real catalog, then emails it. The lead arrives qualified." },
   { href: "/teams", n: "02", tag: "Enterprise", title: "Team pricing calculator", body: "“How many people?” returns a team price instantly. The full proposal goes by email, and 5+ seats reach sales as an MQL." },
-  { href: "/checkout?plan=pro", n: "03", tag: "Easiest to ship", title: "Email-first checkout", body: "Step one asks only for the email, so abandoned checkouts become leads you can recover." },
+  { href: "/checkout/pro", n: "03", tag: "Easiest to ship", title: "Email-first checkout", body: "Step one asks only for the email, so abandoned checkouts become leads you can recover." },
 ];
 
 function Collage() {
@@ -60,13 +62,13 @@ export default function Home() {
               Keep pricing public. Capture the lead anyway
             </h1>
             <p className="mt-6 max-w-[500px] font-light leading-[1.55] text-white/90">
-              Publishing prices removed the checkout step that used to collect emails, so MQLs dropped. These three flows earn the email back by giving something useful first.
+              Give something useful first. The email follows. Publishing prices removed the checkout step that used to collect emails, and MQLs dropped <span className="whitespace-nowrap font-normal text-white">~30% (assumed)</span>. These three bets earn the email back.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <TrackLink href="/advisor" event="Hero CTA Clicked" props={{ cta: "advisor" }} className="ps-btn ps-btn-inverse ps-btn-lg">Find my course</TrackLink>
-              <TrackLink href="/teams" event="Hero CTA Clicked" props={{ cta: "teams" }} className="ps-btn ps-btn-ghost-on-color ps-btn-lg">Get a team price</TrackLink>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <TrackLink href="/advisor" event="Hero CTA Clicked" props={{ cta: "advisor" }} className="ps-btn ps-btn-inverse ps-btn-lg">Find your course with our AI advisor</TrackLink>
+              <TrackLink href="/teams" event="Hero CTA Clicked" props={{ cta: "teams" }} className="text-[15px] font-medium text-white/90 underline-offset-4 hover:text-white hover:underline">or get a team price →</TrackLink>
             </div>
-            <p className="mt-12 font-mono text-xs uppercase tracking-[0.08em] text-white/80">Real Claude call · Next.js on Vercel · built in an afternoon</p>
+            <p className="mt-12 font-mono text-xs uppercase tracking-[0.08em] text-white/80">Real Claude call · Next.js on Vercel · built in an afternoon with Claude Code</p>
           </div>
           <Collage />
         </div>
@@ -75,7 +77,7 @@ export default function Home() {
       <section className="ps-section bg-white">
         <div className="ps-container">
           <span className="ps-eyebrow">Three bets</span>
-          <h2 className="ps-h2 mt-5 max-w-3xl">Give something useful first. <span className="ps-accent">The email follows.</span></h2>
+          <h2 className="ps-h2 mt-5 max-w-3xl">Three bets. <span className="ps-accent">Each one earns the email.</span></h2>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {FLOWS.map((c) => (
               <TrackLink key={c.href} href={c.href} event="Flow Card Clicked" props={{ flow: c.title }} className="ps-card-tint ps-card-link group flex flex-col p-7">
@@ -105,7 +107,7 @@ export default function Home() {
                 <ul className="mt-6 flex-1 space-y-2.5 text-[15px] font-[350] text-ink">
                   {p.features.map((f) => <li key={f} className="flex gap-2.5"><span className="text-primary">✓</span>{f}</li>)}
                 </ul>
-                <TrackLink href={`/checkout?plan=${p.id}`} event="Plan Selected" props={{ plan: p.id }} className={`ps-btn ps-btn-lg mt-7 ${p.id === "pro" ? "ps-btn-primary" : "ps-btn-outline"}`}>Get started</TrackLink>
+                <TrackLink href={`/checkout/${p.id}`} event="Plan Selected" props={{ plan: p.id }} className={`ps-btn ps-btn-lg mt-7 ${p.id === "pro" ? "ps-btn-primary" : "ps-btn-outline"}`}>{CTA[p.id]}</TrackLink>
               </div>
             ))}
           </div>

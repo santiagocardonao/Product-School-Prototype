@@ -49,4 +49,9 @@ describe("teamQuote", () => {
   it("drops fractional seats", () => {
     expect(teamQuote(7.9, "single_certification").seats).toBe(7);
   });
+
+  it("offers a sales call from 25 seats, not below", () => {
+    expect(teamQuote(24, "pro").offerSalesCall).toBe(false);
+    expect(teamQuote(25, "pro").offerSalesCall).toBe(true);
+  });
 });

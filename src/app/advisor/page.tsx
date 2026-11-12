@@ -143,7 +143,8 @@ export default function AdvisorPage() {
         <HypothesisNote
           hypothesis="An undecided visitor will trade an email for a personal learning path, and the lead arrives already qualified (role, seniority, goal, team or individual)."
           metric="Email capture rate among visitors who saw a path."
-          guardrail="Checkout conversion from the pricing page doesn't drop; AI cost stays under $0.02 per run." />
+          guardrail="Checkout conversion from the pricing page doesn't drop; AI cost stays under $0.02 per run."
+          ship="Email capture ≥ 15% of path viewers over 2 weeks, with no drop in checkout conversion." />
       </div>
     </div>
   );

@@ -8,10 +8,11 @@ type Props = {
   cta: string;
   event: string;
   withCompany?: boolean;
+  hint?: string;
   onSent: (email: string) => void;
 };
 
-export default function EmailCapture({ source, data, cta, event, withCompany, onSent }: Props) {
+export default function EmailCapture({ source, data, cta, event, withCompany, hint, onSent }: Props) {
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -42,6 +43,7 @@ export default function EmailCapture({ source, data, cta, event, withCompany, on
       </div>
       <button disabled={busy} className="ps-btn ps-btn-primary ps-btn-lg w-full sm:w-auto">{busy ? "Sending…" : cta}</button>
       {error && <p role="alert" className="text-xs text-[var(--error-300)]">{error}</p>}
+      {hint && <p className="text-sm text-ink">{hint}</p>}
       <p className="text-xs text-secondary">Prototype: use a test email. Nothing is stored or sent.</p>
     </form>
   );

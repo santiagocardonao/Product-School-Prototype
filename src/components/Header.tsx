@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 const LINKS = [
   { href: "/advisor", label: "AI course advisor" },
   { href: "/teams", label: "For teams" },
-  { href: "/checkout?plan=pro", label: "Checkout", match: "/checkout" },
+  { href: "/checkout/pro", label: "Checkout", match: "/checkout" },
 ];
 
 export default function Header() {
@@ -23,7 +23,7 @@ export default function Header() {
           </Link>
           <div className="hidden items-center gap-6 md:flex">
             {LINKS.map((l) => (
-              <Link key={l.href} href={l.href} className="ps-nav-link py-1.5" aria-current={path === (l.match ?? l.href) ? "page" : undefined}>{l.label}</Link>
+              <Link key={l.href} href={l.href} className="ps-nav-link py-1.5" aria-current={path.startsWith(l.match ?? l.href) ? "page" : undefined}>{l.label}</Link>
             ))}
           </div>
           <div className="ml-auto flex items-center gap-3">

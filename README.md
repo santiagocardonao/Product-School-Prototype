@@ -6,7 +6,7 @@ Three flows that earn the visitor's email back after pricing went public. Built 
 |---|---|---|
 | AI course advisor | `/advisor` | **Real Claude call** (structured output validated with Zod; courses can only come from the catalog) |
 | Team pricing calculator | `/teams` | Real math; **team discounts are placeholders** |
-| Email-first checkout | `/checkout?plan=pro` | Step 1 captures the email; payment is disabled |
+| Email-first checkout | `/checkout/pro` | Step 1 captures the email; payment is disabled |
 
 **Stand-ins for your stack:** `src/data/*.ts` = Contentful · `track()` = Segment · `src/lib/flags.ts` = LaunchDarkly · `/api/lead` = HubSpot (logs only, nothing stored) · email previews = transactional email. The "Data panel" (bottom right) shows every event and lead payload.
 

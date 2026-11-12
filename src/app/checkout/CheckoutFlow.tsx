@@ -38,7 +38,8 @@ export default function CheckoutFlow({ planId }: { planId: PlanId }) {
               {!email ? (
                 <div className="mt-4">
                   <EmailCapture source="checkout" event="Checkout Email Captured" cta="Continue to payment"
-                    data={{ plan: planId, price: plan.price, stage: "email_captured" }} onSent={onSent} />
+                    data={{ plan: planId, price: plan.price, stage: "email_captured" }} onSent={onSent}
+                    hint="We'll send your receipt and hold your spot if you leave." />
                 </div>
               ) : (
                 <p className="mt-2 text-[15px]">{email} <span className="text-success">· saved. If you leave now, we can still help you finish.</span></p>
@@ -83,7 +84,8 @@ export default function CheckoutFlow({ planId }: { planId: PlanId }) {
         <HypothesisNote
           hypothesis="Asking only for the email in step one turns abandoned checkouts into leads we can recover."
           metric="Share of started checkouts that leave an email."
-          guardrail="Checkout completion rate does not fall by more than 2 points." />
+          guardrail="Checkout completion rate does not fall by more than 2 points."
+          ship="≥ 60% of started checkouts leave an email and recovery emails win back ≥ 10% of abandoners, with completion within −2pp." />
       </div>
     </div>
   );

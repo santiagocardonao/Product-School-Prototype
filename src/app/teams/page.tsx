@@ -14,6 +14,7 @@ export default function TeamsPage() {
   const [planId, setPlanId] = useState<PlanId>("pro");
   const [focus, setFocus] = useState("");
   const [sentTo, setSentTo] = useState("");
+  const [salesCall, setSalesCall] = useState(false);
   const q = teamQuote(seats, planId);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -65,20 +66,23 @@ export default function TeamsPage() {
 
           <div className="ps-panel p-6 md:p-8">
             <p className="ps-mono-meta uppercase">{q.seats} {q.seats === 1 ? "person" : "people"} · {PLANS[planId].name}</p>
+            {q.savings > 0 && <p className="mt-4"><span className="ps-badge ps-badge--popular text-[11px]">You save {usd(q.savings)}</span></p>}
             <p className="ps-stat mt-3 text-[64px]">{usd(q.total)}</p>
-            <p className="ps-body mt-3 text-[15px]">{usd(q.perSeat)} per person {PLANS[planId].period}</p>
-            {q.discountPct > 0 && (
-              <p className="mt-3 flex flex-wrap gap-2"><span className="ps-badge ps-badge--new">{q.discountPct}% team discount</span><span className="ps-badge ps-badge--neutral">You save {usd(q.savings)}</span></p>
-            )}
+            <p className="ps-body mt-3 text-[15px]">{usd(q.perSeat)} per person {PLANS[planId].period}{q.discountPct > 0 ? ` · ${q.discountPct}% team discount` : ""}</p>
             {q.talkToSales && <p className="mt-4 text-sm font-medium text-primary">50+ people: a learning advisor can build a custom program.</p>}
 
             <div className="mt-7 pt-6 [box-shadow:var(--divider-top)]">
               {!sentTo ? (
                 <>
-                  <p className="ps-title mb-3 text-[17px]">Email me the full proposal</p>
+                  <p className="ps-title mb-3 text-[17px]">Per-seat breakdown, suggested curriculum and invoicing options, in your inbox.</p>
                   <EmailCapture source="team_calculator" event="Team Quote Requested" cta="Send me the proposal" withCompany
                     data={{ seats: q.seats, plan: planId, focusCourse: focus || null, total: q.total, perSeat: q.perSeat, discountPct: q.discountPct, mql: q.isMql, mqlReason: q.isMql ? "team_5plus" : null }}
                     onSent={setSentTo} />
+                  {q.offerSalesCall && (
+                    salesCall
+                      ? <p className="mt-4 text-sm text-success">✓ A learning advisor would book a call here. (Prototype: tracked as a sales call request.)</p>
+                      : <button type="button" onClick={() => { setSalesCall(true); track("Sales Call Requested", { seats: q.seats, plan: planId }); }} className="ps-link-arrow mt-4 text-sm">Prefer a call? Talk to sales</button>
+                  )}
                 </>
               ) : (
                 <p className="font-medium text-success">✓ Proposal sent to {sentTo}. {q.isMql ? "With 5+ seats this went to sales as an MQL." : "Under 5 seats: nurtured, not routed to sales."}</p>
@@ -99,6 +103,7 @@ export default function TeamsPage() {
               </tbody>
             </table>
             <p>Included per person: {PLANS[planId].features.join(", ")}.</p>
+            <p>Suggested curriculum{focus ? `, starting with ${courseBySlug(focus)?.title}` : ""}, and invoicing options (annual invoice, PO or card) are attached.</p>
             <p>A learning advisor will reach out within one business day to plan cohorts with you.</p>
           </EmailPreview>
         )}
@@ -106,7 +111,8 @@ export default function TeamsPage() {
         <HypothesisNote
           hypothesis="Showing a team price instantly, with the full proposal sent by email, makes enterprise buyers raise their hand instead of leaving to compare."
           metric="Team quote requests per calculator view, and the share with 5+ seats (MQLs)."
-          guardrail="Enterprise sales-cycle length and win rate stay the same." />
+          guardrail="Enterprise sales-cycle length and win rate stay the same."
+          ship="Proposal requests ≥ 8% of calculator views and ≥ 40% of them at 5+ seats, with sales confirming lead quality." />
       </div>
     </div>
   );
