@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
 import { AdvisorResult, SYSTEM_PROMPT, buildUserMessage } from "@/lib/advisorSchema";
-import { allow } from "@/lib/rateLimit";
+import { allow, clientIp } from "@/lib/rateLimit";
 
 export const maxDuration = 30;
 
@@ -12,8 +12,7 @@ export async function POST(req: Request) {
   const parsed = Input.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return Response.json({ ok: false, error: "invalid_input" }, { status: 400 });
 
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "local";
-  if (!allow(ip)) return Response.json({ ok: false, error: "rate_limited" }, { status: 429 });
+  if (!allow(`advisor:${clientIp(req)}`)) return Response.json({ ok: false, error: "rate_limited" }, { status: 429 });
   if (!process.env.ANTHROPIC_API_KEY) return Response.json({ ok: false, error: "no_key" }, { status: 503 });
 
   // Keys not tied to a workspace need this header. The ID is not secret ("Default" workspace).

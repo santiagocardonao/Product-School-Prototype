@@ -8,3 +8,6 @@ export function allow(key: string, limit = 5, windowMs = 60_000) {
   hits.set(key, recent);
   return true;
 }
+
+// On Vercel the first x-forwarded-for entry is the client IP (set by the platform).
+export const clientIp = (req: Request) => req.headers.get("x-forwarded-for")?.split(",")[0].trim() || "local";

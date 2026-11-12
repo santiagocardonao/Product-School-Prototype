@@ -28,7 +28,10 @@ export default function EmailCapture({ source, data, cta, event, withCompany, hi
       body: JSON.stringify({ email, source, data: payload }),
     }).catch(() => null);
     setBusy(false);
-    if (!res?.ok) { setError("Please check the email and try again."); return; }
+    if (!res?.ok) {
+      setError(res?.status === 429 ? "Too many tries in a minute. Wait a moment and try again." : "Please check the email and try again.");
+      return;
+    }
     track(event, { source, ...payload });
     recordLead(source, { email, ...payload });
     onSent(email);
