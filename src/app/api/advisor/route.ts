@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { z } from "zod";
-import { AdvisorResult, SYSTEM_PROMPT } from "@/lib/advisorSchema";
+import { AdvisorResult, SYSTEM_PROMPT, buildUserMessage } from "@/lib/advisorSchema";
 import { allow } from "@/lib/rateLimit";
 
 export const maxDuration = 30;
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       system: SYSTEM_PROMPT,
       messages: [{
         role: "user",
-        content: `<visitor_input>${parsed.data.text}</visitor_input>\nBuying for a team: ${parsed.data.team ? "yes" : "no"}`,
+        content: buildUserMessage(parsed.data.text, parsed.data.team),
       }],
       output_config: { format: zodOutputFormat(AdvisorResult), effort: "low" },
     });

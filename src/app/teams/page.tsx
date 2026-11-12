@@ -19,6 +19,8 @@ export default function TeamsPage() {
 
   useEffect(() => {
     const s = Number(new URLSearchParams(window.location.search).get("seats"));
+    // ?seats= comes from the advisor link; window only exists on the client, so read it once on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (s > 0) setSeats(Math.min(500, s));
     track("Team Calculator Viewed", { prefilledSeats: s || null });
   }, []);

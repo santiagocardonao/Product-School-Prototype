@@ -15,6 +15,8 @@ export default function CheckoutFlow({ planId }: { planId: PlanId }) {
 
   useEffect(() => {
     track("Checkout Started", { plan: planId, price: plan.price });
+    // Restore the email after a refresh: sessionStorage only exists on the client, so this runs once on mount.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     try { const saved = sessionStorage.getItem("checkout_email"); if (saved) setEmail(saved); } catch {}
   }, [planId, plan.price]);
 

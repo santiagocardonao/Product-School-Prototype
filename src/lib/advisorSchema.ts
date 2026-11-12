@@ -49,3 +49,10 @@ export const SAMPLE_RESULT: AdvisorResult = {
   recommendedPlan: "pro",
   planReason: "Three courses fit a Pro year: one live certification plus the recorded courses.",
 };
+
+// The visitor's text is wrapped in <visitor_input> so the model treats it as data.
+// Strip any tag the visitor types that could close or reopen that delimiter.
+export function buildUserMessage(text: string, team: boolean) {
+  const safe = text.replace(/<\s*\/?\s*visitor_input\s*>/gi, "");
+  return `<visitor_input>${safe}</visitor_input>\nBuying for a team: ${team ? "yes" : "no"}`;
+}
