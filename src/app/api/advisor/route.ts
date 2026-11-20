@@ -15,10 +15,12 @@ export async function POST(req: Request) {
   if (!allow(`advisor:${clientIp(req)}`)) return Response.json({ ok: false, error: "rate_limited" }, { status: 429 });
   if (!process.env.ANTHROPIC_API_KEY) return Response.json({ ok: false, error: "no_key" }, { status: 503 });
 
-  // Keys not tied to a workspace need this header. The ID is not secret ("Default" workspace).
-  const client = new Anthropic({
-    defaultHeaders: { "anthropic-workspace-id": process.env.ANTHROPIC_WORKSPACE_ID ?? "wrkspc_019ULFQphQs4KMRPeUB6NRLu" },
-  });
+  // A workspace-scoped key already knows its workspace. Send the header only when
+  // ANTHROPIC_WORKSPACE_ID is set, so a key from another workspace isn't rejected.
+  const workspaceId = process.env.ANTHROPIC_WORKSPACE_ID;
+  const client = new Anthropic(
+    workspaceId ? { defaultHeaders: { "anthropic-workspace-id": workspaceId } } : {},
+  );
   const started = Date.now();
   try {
     const res = await client.messages.parse({
